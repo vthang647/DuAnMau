@@ -133,6 +133,11 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         btnNguoiHoc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnNguoiHoc.setMargin(new java.awt.Insets(2, 16, 2, 16));
         btnNguoiHoc.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNguoiHoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNguoiHocActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnNguoiHoc);
 
         btnKhoaHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image_icon/Favourites.png"))); // NOI18N
@@ -404,6 +409,7 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
 
     private void mniQuanLyNguoiHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniQuanLyNguoiHocActionPerformed
         // TODO add your handling code here:
+        openNguoiHoc();
     }//GEN-LAST:event_mniQuanLyNguoiHocActionPerformed
 
     private void mniQuanLyNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniQuanLyNhanVienActionPerformed
@@ -430,6 +436,11 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         // TODO add your handling code here:
         openHuongDan();
     }//GEN-LAST:event_btnHuongDanActionPerformed
+
+    private void btnNguoiHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNguoiHocActionPerformed
+        // TODO add your handling code here:
+        openNguoiHoc();
+    }//GEN-LAST:event_btnNguoiHocActionPerformed
     
     public void ketThuc() {
         if (mgsBox.confirm(this, "are you sure?")) {

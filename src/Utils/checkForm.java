@@ -12,16 +12,14 @@ package Utils;
 public class checkForm {
 
     public static boolean isNum(String str) {
-        try {
-            float f = Float.parseFloat(str);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
+        return str.trim().matches(".*[0-9]");
     }
-    
-    public static boolean check_numberChar(String str, int limit) {
-        return (!str.trim().isEmpty() && str.trim().matches(".*[a-zA-Z0-9]{1, " + limit + "}"));
+
+    public static boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 
 }

@@ -5,6 +5,25 @@
  */
 package Forms;
 
+import Entities.ChuyenDe;
+import Entities.NguoiHoc;
+import Models.Dao.NguoiHocDAO;
+import Models.JdbcHelper;
+import Utils.Auth;
+import Utils.checkForm;
+import Utils.mgsBox;
+import Utils.xDate;
+import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author you have to better
@@ -14,9 +33,15 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
     /**
      * Creates new form QuanLyNguoiHocJDialog
      */
+    private int row;
+    NguoiHocDAO dao;
+    
     public QuanLyNguoiHocJDialog() {
         initComponents();
         setTitle("EduSys - Quản lý người học");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        init();
     }
 
     /**
@@ -29,7 +54,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        Tabs = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtMaNH = new javax.swing.JTextField();
@@ -60,12 +85,12 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
         tblNguoiHoc = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         txtTimKiem = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Tabs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -90,21 +115,51 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
 
         btnLast.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLast.setText(">>");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
 
         btnNext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnNext.setText(">|");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         btnPrev.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPrev.setText("|<");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
 
         btnFirst.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnFirst.setText("<<");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnMoi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMoi.setText("Làm mới");
+        btnMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoiActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSua.setText("Sửa");
@@ -116,6 +171,11 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
 
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Địa chỉ Emal");
@@ -123,8 +183,10 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Giới tính");
 
+        buttonGroup1.add(rdoMale);
         rdoMale.setText("Nam");
 
+        buttonGroup1.add(rdoFemale);
         rdoFemale.setText("Nữ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -176,11 +238,8 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNgaySinh)
                                     .addComponent(txtEmail)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel9))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel9))))
                         .addGap(52, 52, 52))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -230,23 +289,28 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
-        jTabbedPane1.addTab("CẬP NHẬT", jPanel2);
+        Tabs.addTab("CẬP NHẬT", jPanel2);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tblNguoiHoc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã NH", "Họ và Tên", "Giới tính", "Ngày sinh", "Điện thoại", "Email", "MaNV", "Ngày DK"
+                "Mã NH", "Họ và Tên", "Giới tính", "Ngày sinh", "Điện thoại", "Email", "MaNV", "Ngày DK", "Ghi chú"
             }
         ));
+        tblNguoiHoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNguoiHocMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblNguoiHoc);
         if (tblNguoiHoc.getColumnModel().getColumnCount() > 0) {
             tblNguoiHoc.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -255,7 +319,18 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
-        jButton1.setText("Tìm kiếm");
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyPressed(evt);
+            }
+        });
+
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -265,7 +340,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnTimKiem)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -274,7 +349,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addComponent(jButton1))
+                    .addComponent(btnTimKiem))
                 .addContainerGap())
         );
 
@@ -299,7 +374,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("DANH SÁCH", jPanel3);
+        Tabs.addTab("DANH SÁCH", jPanel3);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 255));
@@ -315,7 +390,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addGap(405, 405, 405))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(Tabs)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -324,7 +399,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -333,44 +408,269 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+        update();
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
+        // TODO add your handling code here:
+        clearForm();
+    }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void tblNguoiHocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNguoiHocMouseClicked
+        // TODO add your handling code here:
+        row = tblNguoiHoc.getSelectedRow();
+        Tabs.setSelectedIndex(0);
+        updateForm();
+    }//GEN-LAST:event_tblNguoiHocMouseClicked
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        // TODO add your handling code here:
+        first();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+        last();
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        Prev();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        next();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        timKiem();
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
+        // TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_ENTER:
+                timKiem();
+                break;
+            default:
+                timKiem();
+                break;
+        }
+    }//GEN-LAST:event_txtTimKiemKeyPressed
+    
+    public void init() {
+        row = -1;
+        dao = new NguoiHocDAO();
+        fillTable();
+        rdoFemale.setSelected(true);
+    }
+    
+    public void insert() {
+        
+        if (txtMaNH.getText().trim().isEmpty()) {
+            mgsBox.alert(this, "must be not empty code");
+            txtMaNH.requestFocus();
+        } else {
+            if (txtTenNH.getText().trim().isEmpty()) {
+                mgsBox.alert(this, "must not empty name");
+                txtTenNH.requestFocus();
+            } else {
+                if (xDate.isDate(txtNgaySinh.getText())) {
+                    if (txtNgaySinh.getText().trim().isEmpty()) {
+                        mgsBox.alert(this, "must be not empty bird day");
+                        txtNgaySinh.requestFocus();
+                    } else {
+                        if (checkForm.isNum(txtDienThoai.getText())) {
+                            if (txtDienThoai.getText().trim().isEmpty()) {
+                                mgsBox.alert(this, "must be not empty phone number");
+                                txtDienThoai.requestFocus();
+                            } else {
+                                if (checkForm.isValidEmailAddress(txtEmail.getText())) {
+                                    try {
+                                        dao.insert(getForm());
+                                        fillTable();
+                                        clearForm();
+                                        mgsBox.alert(this, "add succesfully!");
+                                    } catch (Exception e) {
+                                        mgsBox.alert(this, "Thêm thất bại");
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    mgsBox.alert(this, "Email is not true format");
+                                }
+                            }
+                        } else {
+                            mgsBox.alert(this, "number must not be include character.");
+                        }
+                    }
+                } else {
+                    mgsBox.alert(this, "date must be dd-MM-yyyy");
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuanLyNguoiHocJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuanLyNguoiHocJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuanLyNguoiHocJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuanLyNguoiHocJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuanLyNguoiHocJDialog().setVisible(true);
+    }
+    
+    public void update() {
+        try {
+            dao.update(getForm());
+            mgsBox.alert(this, "Cập nhật thành công");
+            fillTable();
+            clearForm();
+        } catch (Exception e) {
+            mgsBox.alert(this, "Cập nhật thất bại");
+            e.printStackTrace();
+        }
+    }
+    
+    public void delete() {
+        
+        if (Auth.isManager() && row != -1) {
+            if(mgsBox.confirm(this, "are you sure delete ?")){
+                dao.delete(txtMaNH.getText());
+                fillTable();
+                clearForm();
+                mgsBox.alert(this, "Xóa thanh cong");
             }
-        });
+        } else {
+            mgsBox.alert(this, "Bạn không có quyền xóa");
+        }
+    }
+    
+    public void updateForm() {
+        txtMaNH.setText((String) tblNguoiHoc.getValueAt(row, 0));
+        txtTenNH.setText((String) tblNguoiHoc.getValueAt(row, 1));
+        if ("Nam".equals(tblNguoiHoc.getValueAt(row, 2).toString())) {
+            rdoMale.setSelected(true);
+        } else {
+            rdoFemale.setSelected(true);
+        }
+        txtNgaySinh.setText(xDate.toString((Date) tblNguoiHoc.getValueAt(row, 3), "dd-MM-yyyy"));
+        txtEmail.setText((String) tblNguoiHoc.getValueAt(row, 5));
+        txtDienThoai.setText((String) tblNguoiHoc.getValueAt(row, 4));
+        txtGhiChu.setText((String) tblNguoiHoc.getValueAt(row, 8));
+        updateStatus();
+    }
+    
+    public void Prev() {
+        if (row > 0) {
+            row--;
+            updateForm();
+            updateStatus();
+        }
+    }
+    
+    public void next() {
+        if (row < tblNguoiHoc.getRowCount() - 1) {
+            row++;
+            updateForm();
+            updateStatus();
+        }
+    }
+    
+    public void first() {
+        row = 0;
+        updateForm();
+        updateStatus();
+    }
+    
+    public void last() {
+        row = tblNguoiHoc.getRowCount() - 1;
+        updateForm();
+        updateStatus();
+    }
+    
+    public NguoiHoc getForm() {
+        NguoiHoc nh = new NguoiHoc();
+        nh.setMaNH(txtMaNH.getText());
+        nh.setHoTen(txtTenNH.getText());
+        nh.setGioiTinh((rdoFemale.isSelected() ? true : false));
+        nh.setNgaySinh(xDate.toDate(txtNgaySinh.getText(), "dd-MM-yyyy"));
+        nh.setDienThoai(txtDienThoai.getText());
+        nh.setEmail(txtEmail.getText());
+        nh.setMaNV(Auth.user.getMaNV());
+        nh.setNgayDK(xDate.toDate(xDate.timeNow(), "dd-MM-yyyy"));
+        nh.setGhiChu(txtGhiChu.getText());
+        return nh;
+    }
+    
+    public void setForm(NguoiHoc nh) {
+        txtMaNH.setText(nh.getMaNH());
+        txtTenNH.setText(nh.getHoTen());
+        if (nh.isGioiTinh()) {
+            rdoFemale.setSelected(true);
+        } else {
+            rdoMale.setSelected(true);
+        }
+        txtNgaySinh.setText("");
+        txtEmail.setText(nh.getEmail());
+        txtDienThoai.setText(nh.getDienThoai());
+        txtGhiChu.setText(nh.getGhiChu());
+    }
+    
+    public void clearForm() {
+        NguoiHoc nh = new NguoiHoc();
+        setForm(nh);
+        row = -1;
+        rdoFemale.setSelected(true);
+        updateStatus();
+    }
+    
+    public void updateStatus() {
+        boolean edit = (row >= 0);
+        boolean first = (row == 0);
+        boolean last = (row == tblNguoiHoc.getRowCount() - 1);
+        // Trang thai form
+        txtMaNH.setEnabled(!edit);
+        btnThem.setEnabled(!edit);
+        btnSua.setEnabled(edit);
+        btnXoa.setEnabled(edit);
+        // Trang thai dieu huong
+        btnFirst.setEnabled(edit && !first);
+        btnPrev.setEnabled(edit && !first);
+        btnNext.setEnabled(!last && edit);
+        btnLast.setEnabled(edit && !last);
+    }
+    
+    public void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblNguoiHoc.getModel();
+        List<NguoiHoc> ls = dao.selectByKeyWord(txtTimKiem.getText());
+        model.setRowCount(0);
+        for (NguoiHoc l : ls) {
+            Vector vec = new Vector();
+            vec.add(l.getMaNH());
+            vec.add(l.getHoTen());
+            vec.add(l.isGioiTinh() ? "Nam" : "Nữ");
+            vec.add(l.getNgaySinh());
+            vec.add(l.getDienThoai());
+            vec.add(l.getEmail());
+            vec.add(l.getMaNV());
+            vec.add(l.getNgayDK());
+            vec.add(l.getGhiChu());
+            model.addRow(vec);
+        }
+    }
+    
+    public void timKiem(){
+        fillTable();
+        clearForm();
+        row=-1;
+        updateStatus();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane Tabs;
     private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnMoi;
@@ -378,9 +678,9 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
     private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
@@ -394,7 +694,6 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
     private javax.swing.JTable tblNguoiHoc;

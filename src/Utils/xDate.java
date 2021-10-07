@@ -5,8 +5,11 @@
  */
 package Utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -28,16 +31,39 @@ public class xDate {
         }
         return null;
     }
-    
+
     //Date now = new date();
     //String s = XDate.toString(now, "dd-MM-yyyy");
     public static String toString(Date date, String parttern) {
-        formater.applyPattern(parttern);
-        return formater.format(date);
+        DateFormat dateFormat = new SimpleDateFormat(parttern);
+        return dateFormat.format(date);
     }
-    
-    public static Date addDays(Date date, long days){
-        date.setTime(date.getTime() + days*24*60*60*1000);
+
+    public static Date addDays(Date date, long days) {
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
         return date;
+    }
+
+    /**
+     * get time now
+     *
+     * @return string
+     */
+    public static String timeNow() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+
+    public static boolean isDate(String date) {
+        SimpleDateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
+        simple.setLenient(false);
+        try {
+            simple.parse(date.trim());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

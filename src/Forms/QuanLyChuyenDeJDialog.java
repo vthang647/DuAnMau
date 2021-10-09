@@ -7,6 +7,7 @@ package Forms;
 
 import Entities.ChuyenDe;
 import Models.Dao.ChuyenDeDAO;
+import Utils.Auth;
 import Utils.XImage;
 import Utils.checkForm;
 import Utils.mgsBox;
@@ -52,7 +53,7 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
         Tabs = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        jpnCapNhat = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         blbAnh = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -63,7 +64,7 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtHocPhi = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jspMoTa = new javax.swing.JScrollPane();
         txtMoTa = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         btnLast = new javax.swing.JButton();
@@ -74,7 +75,7 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
         btnMoi = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        jpnDanhSach = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChuyenDe = new javax.swing.JTable();
 
@@ -97,7 +98,7 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
 
         Tabs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jpnCapNhat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setText("Hình logo");
@@ -125,7 +126,7 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
 
         txtMoTa.setColumns(20);
         txtMoTa.setRows(5);
-        jScrollPane2.setViewportView(txtMoTa);
+        jspMoTa.setViewportView(txtMoTa);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Mô tả chuyên đề");
@@ -194,19 +195,19 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpnCapNhatLayout = new javax.swing.GroupLayout(jpnCapNhat);
+        jpnCapNhat.setLayout(jpnCapNhatLayout);
+        jpnCapNhatLayout.setHorizontalGroup(
+            jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnCapNhatLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnCapNhatLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnCapNhatLayout.createSequentialGroup()
+                        .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jpnCapNhatLayout.createSequentialGroup()
                                 .addComponent(btnThem)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSua)
@@ -222,35 +223,35 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
                                 .addComponent(btnNext)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnLast))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jspMoTa, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpnCapNhatLayout.createSequentialGroup()
+                                .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
                                     .addComponent(txtTenCD, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtMaCD, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(txtHocPhi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                         .addComponent(txtThoiLuong, javax.swing.GroupLayout.Alignment.LEADING)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(blbAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))))
                         .addGap(52, 52, 52))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpnCapNhatLayout.setVerticalGroup(
+            jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnCapNhatLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(blbAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jpnCapNhatLayout.createSequentialGroup()
                         .addComponent(txtMaCD, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
@@ -267,9 +268,9 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jspMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
                     .addComponent(btnSua)
                     .addComponent(btnXoa)
@@ -281,9 +282,9 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
-        Tabs.addTab("CẬP NHẬT", jPanel2);
+        Tabs.addTab("CẬP NHẬT", jpnCapNhat);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jpnDanhSach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tblChuyenDe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -315,24 +316,24 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
             tblChuyenDe.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpnDanhSachLayout = new javax.swing.GroupLayout(jpnDanhSach);
+        jpnDanhSach.setLayout(jpnDanhSachLayout);
+        jpnDanhSachLayout.setHorizontalGroup(
+            jpnDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnDanhSachLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jpnDanhSachLayout.setVerticalGroup(
+            jpnDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnDanhSachLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        Tabs.addTab("DANH SÁCH", jPanel3);
+        Tabs.addTab("DANH SÁCH", jpnDanhSach);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -441,8 +442,8 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
             mgsBox.alert(this, "Sai định dạng mã chuyên đề (<5)");
         }
     }
-    
-    public void update(){
+
+    public void update() {
         ChuyenDe cd = this.getForm();
         dao.update(cd);
         fillTable();
@@ -452,12 +453,16 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
     }
 
     public void delete() {
-        String maCd = (String) tblChuyenDe.getValueAt(row, 0);
-        dao.delete(maCd);
-        fillTable();
-        clearForm();
-        updateStatus();
-        mgsBox.alert(this, "Xóa thành công");
+        if (Auth.isManager()) {
+            String maCd = (String) tblChuyenDe.getValueAt(row, 0);
+            dao.delete(maCd);
+            fillTable();
+            clearForm();
+            updateStatus();
+            mgsBox.alert(this, "Xóa thành công");
+        } else {
+            mgsBox.alert(this, "Bạn không có quyền xóa");
+        }
     }
 
     public void clearForm() {
@@ -528,6 +533,9 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
         if (cd.getHinh() != null) {
             blbAnh.setToolTipText(cd.getHinh());
             blbAnh.setIcon(XImage.read(cd.getHinh()));
+        }else{
+            blbAnh.setToolTipText("");
+            blbAnh.setIcon(null);
         }
     }
 
@@ -558,7 +566,7 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
         btnThem.setEnabled(!edit);
         btnSua.setEnabled(edit);
         btnXoa.setEnabled(edit);
-        btnMoi.setEnabled(!edit);
+        txtMaCD.setEnabled(!edit);
 
         btnFirst.setEnabled(edit && !firsr);
         btnPrev.setEnabled(edit && !firsr);
@@ -587,10 +595,10 @@ public class QuanLyChuyenDeJDialog extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jpnCapNhat;
+    private javax.swing.JPanel jpnDanhSach;
+    private javax.swing.JScrollPane jspMoTa;
     private javax.swing.JTable tblChuyenDe;
     private javax.swing.JTextField txtHocPhi;
     private javax.swing.JTextField txtMaCD;

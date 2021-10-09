@@ -64,7 +64,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtDienThoai = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jspGhiChu = new javax.swing.JScrollPane();
         txtGhiChu = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         btnLast = new javax.swing.JButton();
@@ -108,7 +108,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
 
         txtGhiChu.setColumns(20);
         txtGhiChu.setRows(5);
-        jScrollPane2.setViewportView(txtGhiChu);
+        jspGhiChu.setViewportView(txtGhiChu);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Ghi chú");
@@ -217,7 +217,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                                 .addComponent(btnNext)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnLast))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jspGhiChu, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -275,7 +275,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jspGhiChu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
@@ -693,7 +693,7 @@ public class QuanLyNguoiHocJDialog extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jspGhiChu;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
     private javax.swing.JTable tblNguoiHoc;

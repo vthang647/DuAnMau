@@ -5,6 +5,20 @@
  */
 package Forms;
 
+import Entities.ChuyenDe;
+import Entities.HocVien;
+import Entities.KhoaHoc;
+import Entities.NguoiHoc;
+import Models.Dao.ChuyenDeDAO;
+import Models.Dao.HocVienDAO;
+import Models.Dao.KhoaHocDAO;
+import Models.Dao.NguoiHocDAO;
+import Utils.Auth;
+import Utils.mgsBox;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author you have to better
@@ -14,9 +28,18 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
     /**
      * Creates new form QuanLyHocVienJDialog
      */
+    int row;
+    HocVienDAO hvDao;
+    ChuyenDeDAO cdDao;
+    NguoiHocDAO nhDao;
+    KhoaHocDAO khDao;
+    
     public QuanLyHocVienJDialog() {
         initComponents();
         setTitle("EduSys - Quản lý học viên");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        init();
     }
 
     /**
@@ -122,8 +145,18 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
         }
 
         btnSuaDiem.setText("Cập nhật điểm");
+        btnSuaDiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaDiemActionPerformed(evt);
+            }
+        });
 
         btnXoaHV.setText("Xóa khỏi khóa học");
+        btnXoaHV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaHVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -193,6 +226,11 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblNguoiHoc);
 
         btnThemHV.setText("Thêm vào khóa học");
+        btnThemHV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemHVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -256,39 +294,121 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboChuyenDeActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHocVienJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHocVienJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHocVienJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHocVienJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnThemHVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHVActionPerformed
+        // TODO add your handling code here:
+        addHocVien();
+    }//GEN-LAST:event_btnThemHVActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuanLyHocVienJDialog().setVisible(true);
+    private void btnSuaDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaDiemActionPerformed
+        // TODO add your handling code here:
+        updateDiem();
+    }//GEN-LAST:event_btnSuaDiemActionPerformed
+
+    private void btnXoaHVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaHVActionPerformed
+        // TODO add your handling code here:
+        removeHocVien();
+    }//GEN-LAST:event_btnXoaHVActionPerformed
+    
+    public void init() {
+        row = -1;
+        hvDao = new HocVienDAO();
+        cdDao = new ChuyenDeDAO();
+        nhDao = new NguoiHocDAO();
+        khDao = new KhoaHocDAO();
+        fillComboBoxChuyenDe();
+    }
+    
+    public void fillComboBoxChuyenDe() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboChuyenDe.getModel();
+        model.removeAllElements();
+        List<ChuyenDe> list = cdDao.selectAll();
+        for (ChuyenDe chuyenDe : list) {
+            model.addElement(chuyenDe);
+        }
+        fillComboBoxKhoaHoc();
+    }
+    
+    public void fillComboBoxKhoaHoc() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhoaHoc.getModel();
+        model.removeAllElements();
+        
+        ChuyenDe chuyenDe = (ChuyenDe) cboChuyenDe.getSelectedItem();
+        if (chuyenDe != null) {
+            List<KhoaHoc> list = khDao.selectByChuyenDe(chuyenDe);
+            for (KhoaHoc khoaHoc : list) {
+                model.addElement(khoaHoc);
             }
-        });
+            fillTableHocVien();
+        }
+        
+    }
+    
+    public void fillTableHocVien() {
+        DefaultTableModel model = (DefaultTableModel) tblHocVien.getModel();
+        model.setRowCount(0);
+        KhoaHoc khoaHoc = (KhoaHoc) cboKhoaHoc.getSelectedItem();
+        if (khoaHoc != null) {
+            List<HocVien> list = hvDao.selectByKhoaHoc(khoaHoc.getMaKH());
+            for (int i = 0; i < list.size(); i++) {
+                HocVien hv = list.get(i);
+                String hoTen = nhDao.selectById(hv.getMaNH()).getHoTen();
+                model.addRow(new Object[]{
+                    i + 1, hv.getMaHV(), hv.getMaNH(), hoTen, hv.getDiem()
+                });
+            }
+            fillTableNguoiHoc();
+        }
+    }
+    
+    public void fillTableNguoiHoc() {
+        DefaultTableModel model = (DefaultTableModel) tblNguoiHoc.getModel();
+        model.setRowCount(0);
+        KhoaHoc khoaHoc = (KhoaHoc) cboKhoaHoc.getSelectedItem();
+        String keyword = txtTimKiem.getText();
+        List<NguoiHoc> list = nhDao.selectNotInCourse(khoaHoc.getMaKH(), keyword);
+        for (NguoiHoc nguoiHoc : list) {
+            model.addRow(new Object[]{
+                nguoiHoc.getMaNH(), nguoiHoc.getHoTen(), nguoiHoc.isGioiTinh() ? "Nam" : "Nu",
+                nguoiHoc.getNgaySinh(), nguoiHoc.getDienThoai(), nguoiHoc.getEmail()
+            });
+        }
+    }
+    
+    public void removeHocVien() {
+        if (Auth.isManager()) {
+            if (mgsBox.confirm(this, "Ban muon xoa cac hoc vien")) {
+                for (int row : tblHocVien.getSelectedRows()) {
+                    int maHV = (Integer) tblHocVien.getValueAt(row, 0);
+                    hvDao.delete(maHV);
+                }
+                this.fillTableHocVien();
+            }
+        } else {
+            mgsBox.alert(this, "Ban khong co quyen xoa hoc vien!");
+        }
+    }
+    
+    public void addHocVien() {
+        KhoaHoc khoaHoc = (KhoaHoc) cboKhoaHoc.getSelectedItem();
+        for (int row : tblNguoiHoc.getSelectedRows()) {
+            HocVien hv = new HocVien();
+            hv.setMaHV(khoaHoc.getMaKH());
+            hv.setDiem(0);
+            hv.setMaNH((String) tblNguoiHoc.getValueAt(row, 0));
+            hvDao.insert(hv);
+        }
+        fillTableHocVien();
+        this.Tabs.setSelectedIndex(0);
+    }
+    
+    public void updateDiem() {
+        for (int i = 0; i < tblHocVien.getRowCount(); i++) {
+            int mahv = (int) tblHocVien.getValueAt(i, 1);
+            HocVien hv = hvDao.selectById(mahv);
+            hv.setDiem((double) tblHocVien.getValueAt(i, 4));
+            hvDao.update(hv);
+        }
+        mgsBox.alert(this, "Cap nhat diem thanh cong!");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -279,11 +279,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t &#x111;i&#x1ec3;m"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaDiemActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnXoaHV">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a kh&#x1ecf;i kh&#xf3;a h&#x1ecd;c"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaHVActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -439,6 +445,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Th&#xea;m v&#xe0;o kh&#xf3;a h&#x1ecd;c"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemHVActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

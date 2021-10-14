@@ -78,12 +78,14 @@ public class DangNhapJDialog extends javax.swing.JFrame {
             }
         });
 
+        txtMaNV.setText("TeoNV");
         txtMaNV.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtMaNVKeyPressed(evt);
             }
         });
 
+        txtMatKhau.setText("123456");
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtMatKhauKeyPressed(evt);

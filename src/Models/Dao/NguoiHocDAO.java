@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String> {
 
-    private static final String INSERT_SQL = "INSERT INTO NGUOIHOC(MaNH, HoTen, GioiTinh, NgaySinh, DienThoai, Email, GhiChu,MaNV, NgayDK) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT_SQL = "INSERT INTO NGUOIHOC(MaNH, HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu,MaNV, NgayDK) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE_SQL = "UPDATE NGUOIHOC SET HoTen=?, GioiTinh=?, NgaySinh=?, DienThoai=?, Email=?, GhiChu=?, MaNV=?, NgayDK=? WHERE MaNH = ?";
     private static final String DELETE_SQL = "DELETE FROM NGUOIHOC WHERE MaNH=?";
     private static final String SELECT_ALL_SQL = "select * from NGUOIHOC";
@@ -40,7 +40,7 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String> {
 
     @Override
     public void update(NguoiHoc entity) {
-        jdbcHelper.update(UPDATE_SQL, entity.getHoTen(), entity.isGioiTinh(), entity.getNgaySinh(), entity.getDienThoai(), entity.getEmail(), entity.getGhiChu(), entity.getMaNV(), entity.getNgayDK(), entity.getMaNH());
+        jdbcHelper.update(UPDATE_SQL, entity.getHoTen(), entity.getNgaySinh(),entity.isGioiTinh(), entity.getDienThoai(), entity.getEmail(), entity.getGhiChu(), entity.getMaNV(), entity.getNgayDK(), entity.getMaNH());
     }
 
     @Override
@@ -67,8 +67,8 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String> {
             while (rs.next()) {
                 String MaNH = rs.getString(1);
                 String HoTen = rs.getString(2);
-                boolean GioiTinh = rs.getBoolean(3);
-                Date NgaySinh = rs.getDate(4);
+                Date NgaySinh = rs.getDate(3);
+                boolean GioiTinh = rs.getBoolean(4);
                 String DienThoai = rs.getString(5);
                 String Email = rs.getString(6);
                 String GhiChu = rs.getString(7);
@@ -88,4 +88,11 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String> {
         return selectBySql(SELECT_BY_KEY_WORD, "%" + keyWord + "%");
     }
 
+    public List<NguoiHoc> selectNotInCourse(int maKH, String keyWord){
+        String sql = "SELECT * FROM NGUOIHOC "
+                + "WHERE HoTen LIKE ? AND "
+                + "MaNH NOT IN (SELECT MaNH FROM HOCVIEN WHERE MaKH = ?)";
+        return this.selectBySql(sql, "%" + keyWord + "%", maKH);
+    }
+    
 }

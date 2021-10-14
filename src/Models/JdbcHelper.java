@@ -25,7 +25,7 @@ public class JdbcHelper {
     public JdbcHelper() {
         try {
             Class.forName(driver);
-            conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databasename=EDUSYS_DATABASE;"
+            conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databasename=Polypro;"
                     + "username=sa;password=a");
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("ket noi that bai");

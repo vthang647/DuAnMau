@@ -29,7 +29,7 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         setTitle("EduSys - Màn hình chính");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -146,6 +146,11 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         btnKhoaHoc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnKhoaHoc.setMargin(new java.awt.Insets(2, 16, 2, 16));
         btnKhoaHoc.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnKhoaHoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhoaHocActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnKhoaHoc);
 
         btnHocVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image_icon/Boss.png"))); // NOI18N
@@ -154,6 +159,11 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         btnHocVien.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnHocVien.setMargin(new java.awt.Insets(2, 16, 2, 16));
         btnHocVien.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnHocVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHocVienActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnHocVien);
         jToolBar1.add(sep2);
 
@@ -266,6 +276,11 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         mniQuanLyKhoaHoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
         mniQuanLyKhoaHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image_icon/Favourites.png"))); // NOI18N
         mniQuanLyKhoaHoc.setText("khóa học");
+        mniQuanLyKhoaHoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniQuanLyKhoaHocActionPerformed(evt);
+            }
+        });
         QuanLy.add(mniQuanLyKhoaHoc);
 
         mniQuanLyNguoiHoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.CTRL_MASK));
@@ -441,13 +456,28 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         // TODO add your handling code here:
         openNguoiHoc();
     }//GEN-LAST:event_btnNguoiHocActionPerformed
-    
+
+    private void btnKhoaHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaHocActionPerformed
+        // TODO add your handling code here:
+        openKhoaHoc();
+    }//GEN-LAST:event_btnKhoaHocActionPerformed
+
+    private void mniQuanLyKhoaHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniQuanLyKhoaHocActionPerformed
+        // TODO add your handling code here:
+        openKhoaHoc();
+    }//GEN-LAST:event_mniQuanLyKhoaHocActionPerformed
+
+    private void btnHocVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHocVienActionPerformed
+        // TODO add your handling code here:
+        openHocVien();
+    }//GEN-LAST:event_btnHocVienActionPerformed
+
     public void ketThuc() {
         if (mgsBox.confirm(this, "are you sure?")) {
             System.exit(0);
         }
     }
-    
+
     public void dangXuat() {
         Auth.clear();
         DangNhapJDialog dangNhapJDialog = new DangNhapJDialog();
@@ -455,7 +485,7 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setVisible(false);
     }
-    
+
     public void openDoiMatKhau() {
         if (Auth.isLogin()) {
             DoiMatKhauJDialog doiMatKhauJDialog = new DoiMatKhauJDialog();
@@ -464,34 +494,49 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
             mgsBox.alert(ManHinhChinhJDialog.this, "vui long dang nhap");
         }
     }
-    
+
     public void openChuyenDe() {
         QuanLyChuyenDeJDialog quanLyChuyenDeJDialog = new QuanLyChuyenDeJDialog();
         quanLyChuyenDeJDialog.setVisible(true);
     }
-    
+
     public void openKhoaHoc() {
-        QuanlyKhoaHocJDialog qlkh = new QuanlyKhoaHocJDialog();
-        qlkh.setVisible(true);
+        if (Auth.isLogin()) {
+            QuanlyKhoaHocJDialog qlkh = new QuanlyKhoaHocJDialog();
+            qlkh.setVisible(true);
+        } else {
+            mgsBox.alert(this, "vui long dang nhap");
+        }
+
     }
-    
+
     public void openNguoiHoc() {
-        QuanLyNguoiHocJDialog qlnh = new QuanLyNguoiHocJDialog();
-        qlnh.setVisible(true);
+        if (Auth.isLogin()) {
+            QuanLyNguoiHocJDialog qlnh = new QuanLyNguoiHocJDialog();
+            qlnh.setVisible(true);
+        } else {
+            mgsBox.alert(this, "vui long dang nhap");
+        }
     }
-    
+
     public void openHocVien() {
-        QuanLyHocVienJDialog qlhv = new QuanLyHocVienJDialog();
-        qlhv.setVisible(true);
+        if (Auth.isLogin()) {
+            QuanLyHocVienJDialog qlhv = new QuanLyHocVienJDialog();
+            qlhv.setVisible(true);
+        } else {
+            mgsBox.alert(this, "vui long dang nhap");
+        }
     }
-    
+
     public void openNhanVien() {
         if (Auth.isLogin()) {
             QuanLyNhanVienJDialog nhanvien = new QuanLyNhanVienJDialog();
             nhanvien.setVisible(true);
+        } else {
+            mgsBox.alert(this, "vui long dang nhap");
         }
     }
-    
+
     public void openHuongDan() {
         System.out.println("file" + System.getProperty("user.dir"));
         try {
@@ -501,11 +546,15 @@ public class ManHinhChinhJDialog extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+
     public void openGioiThieu() {
-        
+        if (Auth.isLogin()) {
+
+        } else {
+            mgsBox.alert(this, "vui long dang nhap");
+        }
     }
-    
+
     public void openThongKe(int in) {
         if (Auth.isLogin()) {
             // voi tu cach la truong phong

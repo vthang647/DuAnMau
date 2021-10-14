@@ -103,6 +103,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="kh&#xf3;a h&#x1ecd;c"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQuanLyKhoaHocActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniQuanLyNguoiHoc">
               <Properties>
@@ -374,6 +377,9 @@
             </Property>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKhoaHocActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnHocVien">
           <Properties>
@@ -388,6 +394,9 @@
             </Property>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHocVienActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="sep2">
         </Component>

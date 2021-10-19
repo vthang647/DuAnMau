@@ -101,6 +101,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboChuyenDeItemStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboChuyenDeActionPerformed"/>
           </Events>
           <AuxValues>
@@ -156,6 +157,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboKhoaHocItemStateChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -232,10 +236,10 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="6">
-                        <Column editable="true" title="TT" type="java.lang.Object"/>
-                        <Column editable="true" title="M&#xc3; H&#x1ecc;C VI&#xca;N" type="java.lang.Object"/>
-                        <Column editable="true" title="M&#xc3; NH&#xc2;N VI&#xca;N" type="java.lang.Object"/>
-                        <Column editable="true" title="H&#x1ecc; V&#xc0; T&#xca;N" type="java.lang.Object"/>
+                        <Column editable="false" title="TT" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xc3; H&#x1ecc;C VI&#xca;N" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xc3; NH&#xc2;N VI&#xca;N" type="java.lang.Object"/>
+                        <Column editable="false" title="H&#x1ecc; V&#xc0; T&#xca;N" type="java.lang.Object"/>
                         <Column editable="true" title="&#x110;I&#x1ec2;M" type="java.lang.Object"/>
                       </Table>
                     </Property>
@@ -373,11 +377,17 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="txtTimKiem">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnTimKiem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -392,12 +402,12 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="4">
-                        <Column editable="true" title="M&#xc3; NH" type="java.lang.Object"/>
-                        <Column editable="true" title="H&#x1ecc; V&#x1ea2; T&#xca;N" type="java.lang.Object"/>
-                        <Column editable="true" title="GI&#x1eda;I T&#xcd;NH" type="java.lang.Object"/>
-                        <Column editable="true" title="NG&#xc0;Y SINH" type="java.lang.Object"/>
-                        <Column editable="true" title="&#x110;I&#x1ec6;N THO&#x1ea0;I" type="java.lang.Object"/>
-                        <Column editable="true" title="EMAIL" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xc3; NH" type="java.lang.Object"/>
+                        <Column editable="false" title="H&#x1ecc; V&#x1ea2; T&#xca;N" type="java.lang.Object"/>
+                        <Column editable="false" title="GI&#x1eda;I T&#xcd;NH" type="java.lang.Object"/>
+                        <Column editable="false" title="NG&#xc0;Y SINH" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x110;I&#x1ec6;N THO&#x1ea0;I" type="java.lang.Object"/>
+                        <Column editable="false" title="EMAIL" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -10,15 +10,16 @@ package Entities;
  * @author you have to better
  */
 public class HocVien {
+
     private int maHV;
     private int maKH;
     private String maNH;
-    private double diem;
+    private float diem;
 
     public HocVien() {
     }
 
-    public HocVien(int maHV, int maKH, String maNH, double diem) {
+    public HocVien(int maHV, int maKH, String maNH, float diem) {
         this.maHV = maHV;
         this.maKH = maKH;
         this.maNH = maNH;
@@ -49,20 +50,17 @@ public class HocVien {
         this.maNH = maNH;
     }
 
-    public double getDiem() {
+    public float getDiem() {
         return diem;
     }
 
-    public void setDiem(double diem) {
+    public void setDiem(float diem) {
         this.diem = diem;
     }
 
-    
-    
     @Override
     public String toString() {
         return "HocVien{" + "maHV=" + maHV + ", maKH=" + maKH + ", maNH=" + maNH + ", diem=" + diem + '}';
     }
-    
-    
+
 }

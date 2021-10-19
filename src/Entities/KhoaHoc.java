@@ -102,7 +102,7 @@ public class KhoaHoc {
 
     @Override
     public String toString() {
-        return "KhoaHoc{" + "maKH=" + maKH + ", maCD=" + maCD + ", hocPhi=" + hocPhi + ", thoiLuong=" + thoiLuong + ", ngayKG=" + ngayKG + ", ghiChu=" + ghiChu + ", maNV=" + maNV + ", ngayTao=" + ngayTao + '}';
+        return this.maCD;
     }
-
+    
 }

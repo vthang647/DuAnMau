@@ -8,6 +8,7 @@ package Models.Dao;
 import Entities.ChuyenDe;
 import Entities.KhoaHoc;
 import Models.JdbcHelper;
+import Utils.XJdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -89,5 +90,20 @@ public class KhoaHocDAO extends EduSysDAO<KhoaHoc, String> {
 
     public List<KhoaHoc> selectByChuyenDe(ChuyenDe s) {
         return selectBySql(SELECT_BY_MaCD, s.getMaCD());
+    }
+    
+    public List<Integer> selectYears(){
+        String sql = "select distinct year(NgayKG) as yearr from KHOAHOC order by yearr DESC";
+        List<Integer> list = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.query(sql);
+            while(rs.next()){
+                list.add(rs.getInt(1));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

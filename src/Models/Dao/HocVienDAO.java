@@ -6,6 +6,7 @@
 package Models.Dao;
 
 import Entities.HocVien;
+import Entities.NguoiHoc;
 import Models.JdbcHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,10 +22,11 @@ import java.util.logging.Logger;
 public class HocVienDAO extends EduSysDAO<HocVien, Integer> {
 
     private static final String INSERT_SQL = "INSERT INTO HOCVIEN(MaKH, MaNH, Diem) VALUES (?,?,?)";
-    private static final String UPDATE_SQL = "UPDATE HOCVIEN SET MaKH=?, MaNH=?, Diem=? WHERE MaHV=?";
+    private static final String UPDATE_SQL = "UPDATE HOCVIEN SET Diem=? WHERE MaHV=?";
     private static final String DELETE_SQL = "DELETE FROM HOCVIEN WHERE MaHV=?";
     private static final String SELECT_ALL_SQL = "select * from HOCVIEN";
     private static final String SELECT_BY_ID_SQL = "SELECT * FROM HOCVIEN WHERE MaHV = ?";
+    
     JdbcHelper jdbcHelper;
 
     public HocVienDAO() {
@@ -38,7 +40,7 @@ public class HocVienDAO extends EduSysDAO<HocVien, Integer> {
 
     @Override
     public void update(HocVien entity) {
-        jdbcHelper.update(UPDATE_SQL, entity.getMaKH(), entity.getMaNH(), entity.getDiem(), entity.getMaHV());
+        jdbcHelper.update(UPDATE_SQL, entity.getDiem(), entity.getMaHV());
     }
 
     @Override

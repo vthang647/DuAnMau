@@ -19,8 +19,14 @@ import java.util.logging.Logger;
  */
 public class ThongKeDAO {
 
+    JdbcHelper jdbcHelper;
+    
+    public ThongKeDAO() {
+        jdbcHelper = new JdbcHelper();
+    }
+    
     private List<Object[]> getListOfArray(String sql, String[] cols, Object... args) {
-        JdbcHelper jdbcHelper = new JdbcHelper();
+        
         List<Object[]> ls = new ArrayList<>();
         try {
             ResultSet rs = jdbcHelper.query(sql, args);
@@ -31,33 +37,32 @@ public class ThongKeDAO {
                 }
                 ls.add(vals);
             }
-            rs.getStatement().getConnection().close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return ls;
     }
 
-    private List<Object[]> getBangDiem(Integer makh) {
+    public List<Object[]> getBangDiem(Integer makh) {
         String sql = "{CALL sp_BangDiem(?)}";
         String[] cols = {"MaNH", "HoTen", "Diem"};
         return this.getListOfArray(sql, cols, makh);
     }
 
-    private List<Object[]> getLuongNguoiHoc() {
-        String sql = "{CALL sp_LuongNguoiHoc}";
+    public List<Object[]> getLuongNguoiHoc() {
+        String sql = "{CALL sp_ThongKeNguoiHoc}";
         String[] cols = {"Nam", "SoLuong", "DauTien", "CuoiCung"};
         return this.getListOfArray(sql, cols);
     }
 
-    private List<Object[]> getDiemChuyenDe() {
-        String sql = "{CALL sp_DiemChuyenDe}";
+    public List<Object[]> getDiemChuyenDe() {
+        String sql = "{CALL sp_ThongKeDiem}";
         String[] cols = {"ChuyenDe", "SoHV", "ThapNhat", "CaoNhat", "TrungBinh"};
         return this.getListOfArray(sql, cols);
     }
 
-    private List<Object[]> getDoanhThu(int nam) {
-        String sql = "{CALL sp_DoanhThu(?)}";
+    public List<Object[]> getDoanhThu(int nam) {
+        String sql = "{CALL sp_ThongKeDoanhThu(?)}";
         String[] cols = {"ChuyenDe", "SoKH", "SoHV", "DoanhThu", "ThapNhat", "CaoNhat", "TrungBinh"};
         return this.getListOfArray(sql, cols, nam);
     }

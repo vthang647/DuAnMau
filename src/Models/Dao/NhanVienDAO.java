@@ -5,6 +5,7 @@
  */
 package Models.Dao;
 
+import Entities.NguoiHoc;
 import Entities.NhanVien;
 import Models.JdbcHelper;
 import java.sql.ResultSet;
@@ -26,6 +27,7 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
     private static final String SELECT_ALL_SQL = "SELECT * FROM NHANVIEN";
     private static final String SELECT_BY_ID_SQL = "SELECT * FROM NHANVIEN WHERE MaNV = ?";
     private static final String SELECT_BY_ID_AND_PASSWD = "SELECT * FROM NHANVIEN WHERE MaNV=? and MatKhau=?";
+    
     JdbcHelper jdbcHelper;
 
     public NhanVienDAO() {
@@ -93,5 +95,5 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
         }
         return this.selectBySql(SELECT_BY_ID_AND_PASSWD, id, passwd).get(0);
     }
-
+    
 }

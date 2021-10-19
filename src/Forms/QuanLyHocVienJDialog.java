@@ -15,6 +15,7 @@ import Models.Dao.KhoaHocDAO;
 import Models.Dao.NguoiHocDAO;
 import Utils.Auth;
 import Utils.mgsBox;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -28,12 +29,11 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
     /**
      * Creates new form QuanLyHocVienJDialog
      */
-    int row;
     HocVienDAO hvDao;
     ChuyenDeDAO cdDao;
     NguoiHocDAO nhDao;
     KhoaHocDAO khDao;
-    
+
     public QuanLyHocVienJDialog() {
         initComponents();
         setTitle("EduSys - Quản lý học viên");
@@ -75,6 +75,11 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
 
         cboChuyenDe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cboChuyenDe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboChuyenDe.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboChuyenDeItemStateChanged(evt);
+            }
+        });
         cboChuyenDe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboChuyenDeActionPerformed(evt);
@@ -102,6 +107,11 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
 
         cboKhoaHoc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cboKhoaHoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboKhoaHoc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboKhoaHocItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpnKhoaHocLayout = new javax.swing.GroupLayout(jpnKhoaHoc);
         jpnKhoaHoc.setLayout(jpnKhoaHocLayout);
@@ -136,7 +146,15 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
             new String [] {
                 "TT", "MÃ HỌC VIÊN", "MÃ NHÂN VIÊN", "HỌ VÀ TÊN", "ĐIỂM"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblHocVien);
         if (tblHocVien.getColumnModel().getColumnCount() > 0) {
             tblHocVien.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -189,7 +207,18 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyPressed(evt);
+            }
+        });
+
         btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -222,7 +251,15 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
             new String [] {
                 "MÃ NH", "HỌ VẢ TÊN", "GIỚI TÍNH", "NGÀY SINH", "ĐIỆN THOẠI", "EMAIL"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblNguoiHoc);
 
         btnThemHV.setText("Thêm vào khóa học");
@@ -308,16 +345,42 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
         // TODO add your handling code here:
         removeHocVien();
     }//GEN-LAST:event_btnXoaHVActionPerformed
-    
+
+    private void cboChuyenDeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChuyenDeItemStateChanged
+        // TODO add your handling code here:
+        fillComboBoxKhoaHoc();
+    }//GEN-LAST:event_cboChuyenDeItemStateChanged
+
+    private void cboKhoaHocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboKhoaHocItemStateChanged
+        // TODO add your handling code here:
+        fillTableHocVien();
+    }//GEN-LAST:event_cboKhoaHocItemStateChanged
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        timKiem();
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
+        // TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_ENTER:
+                timKiem();
+                break;
+            default:
+                timKiem();
+                break;
+        }
+    }//GEN-LAST:event_txtTimKiemKeyPressed
+
     public void init() {
-        row = -1;
         hvDao = new HocVienDAO();
         cdDao = new ChuyenDeDAO();
         nhDao = new NguoiHocDAO();
         khDao = new KhoaHocDAO();
         fillComboBoxChuyenDe();
     }
-    
+
     public void fillComboBoxChuyenDe() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboChuyenDe.getModel();
         model.removeAllElements();
@@ -327,22 +390,24 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
         }
         fillComboBoxKhoaHoc();
     }
-    
+
     public void fillComboBoxKhoaHoc() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhoaHoc.getModel();
         model.removeAllElements();
-        
+
         ChuyenDe chuyenDe = (ChuyenDe) cboChuyenDe.getSelectedItem();
         if (chuyenDe != null) {
             List<KhoaHoc> list = khDao.selectByChuyenDe(chuyenDe);
-            for (KhoaHoc khoaHoc : list) {
-                model.addElement(khoaHoc);
+            if (list != null) {
+                for (KhoaHoc khoaHoc : list) {
+                    model.addElement(khoaHoc);
+                }
+                fillTableHocVien();
             }
-            fillTableHocVien();
         }
-        
+
     }
-    
+
     public void fillTableHocVien() {
         DefaultTableModel model = (DefaultTableModel) tblHocVien.getModel();
         model.setRowCount(0);
@@ -359,40 +424,44 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
             fillTableNguoiHoc();
         }
     }
-    
+
     public void fillTableNguoiHoc() {
         DefaultTableModel model = (DefaultTableModel) tblNguoiHoc.getModel();
         model.setRowCount(0);
         KhoaHoc khoaHoc = (KhoaHoc) cboKhoaHoc.getSelectedItem();
         String keyword = txtTimKiem.getText();
         List<NguoiHoc> list = nhDao.selectNotInCourse(khoaHoc.getMaKH(), keyword);
-        for (NguoiHoc nguoiHoc : list) {
-            model.addRow(new Object[]{
-                nguoiHoc.getMaNH(), nguoiHoc.getHoTen(), nguoiHoc.isGioiTinh() ? "Nam" : "Nu",
-                nguoiHoc.getNgaySinh(), nguoiHoc.getDienThoai(), nguoiHoc.getEmail()
-            });
+        if (list != null) {
+            for (NguoiHoc nguoiHoc : list) {
+                model.addRow(new Object[]{
+                    nguoiHoc.getMaNH(), nguoiHoc.getHoTen(), nguoiHoc.isGioiTinh() ? "Nam" : "Nu",
+                    nguoiHoc.getNgaySinh(), nguoiHoc.getDienThoai(), nguoiHoc.getEmail()
+                });
+            }
         }
     }
-    
+
     public void removeHocVien() {
         if (Auth.isManager()) {
-            if (mgsBox.confirm(this, "Ban muon xoa cac hoc vien")) {
-                for (int row : tblHocVien.getSelectedRows()) {
-                    int maHV = (Integer) tblHocVien.getValueAt(row, 0);
+            int[] rows = tblHocVien.getSelectedRows();
+            if (rows.length > 0 && mgsBox.confirm(this, "Ban muon xoa cac hoc vien")) {
+                for (int row : rows) {
+                    int maHV = (Integer) tblHocVien.getValueAt(row, 1);
                     hvDao.delete(maHV);
                 }
+                mgsBox.alert(this, "Xoa thanh cong");
                 this.fillTableHocVien();
             }
         } else {
             mgsBox.alert(this, "Ban khong co quyen xoa hoc vien!");
         }
     }
-    
+
     public void addHocVien() {
         KhoaHoc khoaHoc = (KhoaHoc) cboKhoaHoc.getSelectedItem();
         for (int row : tblNguoiHoc.getSelectedRows()) {
             HocVien hv = new HocVien();
-            hv.setMaHV(khoaHoc.getMaKH());
+            hv.setMaKH(khoaHoc.getMaKH());
             hv.setDiem(0);
             hv.setMaNH((String) tblNguoiHoc.getValueAt(row, 0));
             hvDao.insert(hv);
@@ -400,17 +469,23 @@ public class QuanLyHocVienJDialog extends javax.swing.JFrame {
         fillTableHocVien();
         this.Tabs.setSelectedIndex(0);
     }
-    
+
     public void updateDiem() {
         for (int i = 0; i < tblHocVien.getRowCount(); i++) {
-            int mahv = (int) tblHocVien.getValueAt(i, 1);
+            int mahv = (Integer) tblHocVien.getValueAt(i, 1);
+            float diem = Float.parseFloat(tblHocVien.getValueAt(i, 4).toString());
+
             HocVien hv = hvDao.selectById(mahv);
-            hv.setDiem((double) tblHocVien.getValueAt(i, 4));
+            hv.setDiem(diem);
             hvDao.update(hv);
         }
         mgsBox.alert(this, "Cap nhat diem thanh cong!");
     }
 
+    public void timKiem(){
+        fillTableNguoiHoc();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JButton btnSuaDiem;
